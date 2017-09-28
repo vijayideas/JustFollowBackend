@@ -1,4 +1,4 @@
-package com.vjy.justfollow.model;
+package com.vjy.justfollow.common.mongodb.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,16 +7,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Document(collection="users")
-public class User {
+public class UserMongoObject {
 
     @Id
     private String id;
-    private String firstName ;
-    private String lastName;
+    private String name ;
     private String mailId;
     private String mobileNumber;
     private String password;
     private String userId ;
+    private String fbId ;
+    private String picFileName;
+    private Date dateOfBirth;
 
     //Facebook , Google , Or Native
     private String accountCreatedFrom;
@@ -27,24 +29,50 @@ public class User {
     private Date modifiedDate;
 
 
-    public User() {
+    public UserMongoObject() {
     }
 
-    public User(String firstName, String lastName, String mailId, String mobileNumber, String userId, String accountCreatedFrom, int status, Date createdDate, Date modifiedDate) {
+
+    public UserMongoObject(String name, String mailId, String mobileNumber,
+                           String userId, String picFileName, Date dateOfBirth, String accountCreatedFrom, int status, Date createdDate, Date modifiedDate) {
+
         super();
 
-
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.mailId = mailId;
         this.mobileNumber = mobileNumber;
         this.userId = userId;
+        this.picFileName = picFileName;
+        this.dateOfBirth = dateOfBirth;
         this.accountCreatedFrom = accountCreatedFrom;
         this.status = status;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getFbId() {
+        return fbId;
+    }
+
+    public void setFbId(String fbId) {
+        this.fbId = fbId;
+    }
+
+    public String getPicFileName() {
+        return picFileName;
+    }
+
+    public void setPicFileName(String picFileName) {
+        this.picFileName = picFileName;
+    }
 
     public String getId() {
         return id;
@@ -54,20 +82,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMailId() {
