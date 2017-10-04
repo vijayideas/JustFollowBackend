@@ -23,7 +23,7 @@ public class PostServiceImpl implements PostService {
     private UserCrudService userCrudService;
 
     @Override
-    public CommonResponse getAllPost() {
+    public CommonResponse getAllPost(String userId) {
 
 
         List<PostMongoObject> postMongoObjects = postRepository.findAllByOrderByCreatedDateDesc();
@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService {
 
         for (PostMongoObject object:postMongoObjects) {
 
-            postDetailsVos.add(new PostDetailsVo(object, userCrudService.getUserDetail(object.getUserId())));
+            postDetailsVos.add(new PostDetailsVo(object, userCrudService.getUserDetail(object.getUserId()), userId));
         }
 
 

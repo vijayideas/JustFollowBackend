@@ -1,6 +1,5 @@
 package com.vjy.justfollow.services.post.impl;
 
-import com.google.gson.Gson;
 import com.vjy.justfollow.common.mongodb.model.PostMongoObject;
 import com.vjy.justfollow.common.mongodb.repository.PostRepository;
 import com.vjy.justfollow.common.response.CommonResponse;
@@ -8,7 +7,6 @@ import com.vjy.justfollow.services.post.PostCrudService;
 import com.vjy.justfollow.services.user.UserCrudService;
 import com.vjy.justfollow.vo.post.PostCreateVO;
 import com.vjy.justfollow.vo.post.PostDetailsVo;
-import com.vjy.justfollow.vo.user.UserDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +30,6 @@ public class PostCrudServiceImpl implements PostCrudService{
         PostMongoObject mongoObject = new PostMongoObject(postCreateVO.getUserId(), postCreateVO.getText(), postCreateVO.getMediaType(),
                 postCreateVO.getMediaFile(), postCreateVO.getPrivacy(), new Timestamp(System.currentTimeMillis()));
 
-
-
         return new CommonResponse("Post created successfully", 0, postRepository.save(mongoObject));
     }
 
@@ -51,17 +47,24 @@ public class PostCrudServiceImpl implements PostCrudService{
     }
 
     @Override
-    public CommonResponse getAllPost() {
+    public CommonResponse getAllPost(String userId) {
 
         List<PostMongoObject> postMongoObjects = postRepository.findAllByOrderByCreatedDateDesc();
         List<PostDetailsVo> postDetailsVos = new ArrayList<>();
 
         for (PostMongoObject object:postMongoObjects) {
-            postDetailsVos.add(new PostDetailsVo(object, userCrudService.getUserDetail(object.getUserId())));
+            postDetailsVos.add(new PostDetailsVo(object, userCrudService.getUserDetail(object.getUserId()), userId));
         }
 
 
 
         return new CommonResponse("success", 0, postDetailsVos);
+    }
+
+    @Override
+    public CommonResponse deleteAll() {
+        postRepository.deleteAll();
+
+        return new CommonResponse("success", 0, null);
     }
 }

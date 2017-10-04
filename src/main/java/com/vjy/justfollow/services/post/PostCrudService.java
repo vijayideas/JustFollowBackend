@@ -11,5 +11,7 @@ public interface PostCrudService {
 
     CommonResponse likePost(String postId, String likerId);
 
-    CommonResponse getAllPost();
+    CommonResponse getAllPost(String userId);
+
+    CommonResponse deleteAll();
 }

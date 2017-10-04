@@ -37,8 +37,8 @@ public class PostController {
 
     @RequestMapping(value = "/allPost", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(postCrudService.getAllPost());
+    public ResponseEntity<?> getAll(@RequestParam String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getAllPost(userId));
     }
 
 

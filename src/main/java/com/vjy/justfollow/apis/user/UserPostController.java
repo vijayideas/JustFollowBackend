@@ -1,6 +1,7 @@
 package com.vjy.justfollow.apis.user;
 
 
+import com.vjy.justfollow.common.response.CommonResponse;
 import com.vjy.justfollow.common.response.IOResponse;
 import com.vjy.justfollow.common.utils.JustFollowUtils;
 import com.vjy.justfollow.exceptionHandling.ErrorMessage;
@@ -89,8 +90,8 @@ public class UserPostController {
 
     @RequestMapping(value = "/allPost", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(postCrudService.getAllPost());
+    public ResponseEntity<?> getAll(@RequestParam String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(postCrudService.getAllPost(userId));
     }
 
 
@@ -98,6 +99,27 @@ public class UserPostController {
     /**
      *return file according to file name
      */
+    @RequestMapping(value = "/deleteAll" , method = RequestMethod.GET)
+    public ResponseEntity<Object> deleteAll(@RequestParam int pass){
+
+        if (pass == 5394) {
+          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(postCrudService.deleteAll());
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CommonResponse("wrong password",1, pass));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     @RequestMapping(value = "img/{userId}/{fileName}" , method = RequestMethod.GET)
     public ResponseEntity<Object> getPostFile(@PathVariable("userId") String userId,@PathVariable("fileName") String fileName){
 

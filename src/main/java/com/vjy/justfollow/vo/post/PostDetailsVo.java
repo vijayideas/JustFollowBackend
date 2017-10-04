@@ -27,6 +27,8 @@ public class PostDetailsVo{
 
     private List<String> likerList;
 
+    private boolean isLiked;
+
 
     public PostDetailsVo() {
     }
@@ -42,9 +44,10 @@ public class PostDetailsVo{
         this.likes = likes;
         this.createdDate = createdDate;
         this.likerList = likerList;
+
     }
 
-    public PostDetailsVo(PostMongoObject object, UserDetailVo user) {
+    public PostDetailsVo(PostMongoObject object, UserDetailVo user, String clientUserId) {
         super();
 
         this.id = object.getId();
@@ -59,8 +62,17 @@ public class PostDetailsVo{
         this.likes = object.getLikes();
         this.createdDate = object.getCreatedDate();
         this.likerList = object.getLikerList() != null ? object.getLikerList() : new ArrayList<>();
+        this.isLiked = object.getLikerList() != null && object.getLikerList().contains(clientUserId);
     }
 
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
 
     public String getProfilePic() {
         return profilePic;
